@@ -14,7 +14,8 @@ def cve_test(image_fname):
     #trivy 설치 후 trivy 이미지를 가져온 후 실행
     #https://aquasecurity.github.io/trivy/v0.37/getting-started/installation/
     command="sudo docker run aquasec/trivy image "+ image_fname
-    os.system(command)
+    txt_command = command + '> ./trivy_result.txt'
+    os.system(txt_command)
     
 # 메인 함수
 def main():
