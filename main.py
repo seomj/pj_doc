@@ -52,12 +52,16 @@ def main():
     print("================================================================")
     image_fname= input("docker hub image full name(ex.name:tag): ")
     hash_output = get_hash(image_fname)
-    print(hash_output, end='')
-    namespace, name = image_fname.split('/')
-    name, tag = name.split(':')
+    if '/' in image_fname:
+        namespace, name = image_fname.split('/')
+        name, tag = name.split(':')
+    else:
+        namespace = 'library'
+        name, tag = image_fname.split(':')
+    print(namespace, name, tag, hash_output)
     print("================================================================")
     #cve_test(image_fname)
-    #show_image_layer(namespace, name, tag, hash_output)
+    show_image_layer(namespace, name, tag, hash_output)
 
 if __name__ == '__main__':
     main()

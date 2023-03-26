@@ -1,22 +1,8 @@
 import os, sys, subprocess
+import show_layers
 
 dir_path="./pj_doc"
-image_fname = "centos:latest"
 #image_fname = "biocontainers/python-bz2file:v0.98-1-deb_cv1"
-
-command="sudo docker manifest inspect "+ image_fname +" -v"
-output = subprocess.check_output(command, shell=True, encoding='utf-8')
-#print(output)
-
-c_ref = output.count('Ref')
-
-if c_ref == 1:
-    command="sudo docker manifest inspect "+ image_fname +" -v | jq -r '.Descriptor.digest'"
-else:
-    command="sudo docker manifest inspect "+ image_fname +" -v | jq '.[].Descriptor.platform'"
-    output = subprocess.check_output(command, shell=True, encoding='utf-8')
-    print(output)
-    num = int(input('What do you want docker image? '))
-    command="sudo docker manifest inspect "+ image_fname +" -v | jq -r '.[%d].Descriptor.digest'"%num 
-    output = subprocess.check_output(command, shell=True, encoding='utf-8')
-    print(output)
+sh = show_layers.ShowHistory(20)
+print(sh.run('library', 'centos', 'latest', 'sha256:a1801b843b1bfaf77c501e7a6d3f709401a1e0c83863037fa3aab063a7fdb9dc'))
+#show_image_layer('library', 'centos', 'latest', 'sha256:a1801b843b1bfaf77c501e7a6d3f709401a1e0c83863037fa3aab063a7fdb9dc')
