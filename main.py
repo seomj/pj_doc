@@ -8,8 +8,12 @@ def search_dockerhub(image_name):
 
 def get_hash(image_fname):
     #jq 설치 필요
-    command="sudo docker manifest inspect "+ image_fname +" -v"
-    output = subprocess.check_output(command, shell=True, encoding='utf-8')
+    try:
+        command="sudo docker manifest inspect "+ image_fname +" -v"
+        output = subprocess.check_output(command, shell=True, encoding='utf-8')
+    except:
+        print('올바르지 않는 DOCKER IMAGE NAME 입니다.')
+        sys.exit(0)
 
     #Ref로 갯수 확인
     c_ref = output.count('Ref')
